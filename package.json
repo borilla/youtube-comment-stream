@@ -8,6 +8,7 @@
     "unit-test": "mocha test",
     "lint": "eslint src test",
     "precommit": "npm test",
+    "postcommit": "npm --no-git-tag-version version patch",
     "prepublish": "npm test",
     "prepush": "npm test"
   },
