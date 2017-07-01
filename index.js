@@ -1,6 +1,6 @@
-var getYouTubeCommentsStream = require('./lib/get-youtube-comments-stream');
+var getCommentsStream = require('./lib/get-comments-stream');
 var fetchCommentsPage = require('youtube-comment-api');
 
 module.exports = function (videoId) {
-	return getYouTubeCommentsStream(videoId, fetchCommentsPage);
+	return getCommentsStream(videoId, fetchCommentsPage);
 };

@@ -1,4 +1,4 @@
-var getYouTubeCommentsStream = require('../lib/get-youtube-comments-stream');
+var getCommentsStream = require('../lib/get-comments-stream');
 var fetchCommentsPage = require('./mocks/fetch-comments-page');
 var C = require('./mocks/test-constants');
 
@@ -12,7 +12,7 @@ var expect = chai.expect;
 chai.use(chaiStream);
 chai.use(sinonChai);
 
-describe('get-youtube-comments-stream', function () {
+describe('get-comments-stream', function () {
 	var sandbox;
 
 	before(function () {
@@ -25,14 +25,14 @@ describe('get-youtube-comments-stream', function () {
 	});
 
 	it('should be a function', function () {
-		expect(getYouTubeCommentsStream).to.be.a('function');
+		expect(getCommentsStream).to.be.a('function');
 	});
 
 	describe('when called with a valid video-id', function () {
 		var stream;
 
 		beforeEach(function () {
-			stream = getYouTubeCommentsStream(C.VALID_VIDEO_ID, fetchCommentsPage);
+			stream = getCommentsStream(C.VALID_VIDEO_ID, fetchCommentsPage);
 		});
 
 		it('should return a stream', function () {
@@ -118,7 +118,7 @@ describe('get-youtube-comments-stream', function () {
 		var stream;
 
 		beforeEach(function () {
-			stream = getYouTubeCommentsStream(C.INVALID_VIDEO_ID, fetchCommentsPage);
+			stream = getCommentsStream(C.INVALID_VIDEO_ID, fetchCommentsPage);
 		});
 
 		it('should emit an error', function (done) {
