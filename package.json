@@ -1,7 +1,7 @@
 {
   "name": "youtube-comments-stream",
-  "version": "1.0.0",
-  "description": "Scrape comments, including their replies, from a YouTube video and present as a stream",
+  "version": "1.0.1",
+  "description": "Scrape comments (including replies) from a YouTube video and present as a stream",
   "main": "index.js",
   "scripts": {
     "test": "npm run unit-test && npm run lint",
