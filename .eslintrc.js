@@ -9,7 +9,6 @@ module.exports = {
 		'brace-style': [ 'error', 'stroustrup', { 'allowSingleLine': true } ],
 		'camelcase': [ 'error', { 'properties': 'never' } ],
 		'comma-spacing': [ 'error', { 'before': false, 'after': true } ],
-		'computed-property-spacing': [ 'error', 'always' ],
 		'curly': [ 'error', 'all' ],
 		'eol-last': [ 'error' ],
 		'indent': [ 'error', 'tab' ],

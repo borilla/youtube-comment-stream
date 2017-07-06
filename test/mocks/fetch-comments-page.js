@@ -1,4 +1,4 @@
-var C = require('./test-constants.js');
+var C = require('./fetch-comments-page-constants.js');
 
 var COMMENTS_PAGE_1 = {
 	comments: [

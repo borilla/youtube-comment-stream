@@ -1,6 +1,6 @@
 var getCommentsStream = require('../lib/get-comments-stream');
 var fetchCommentsPage = require('./mocks/fetch-comments-page');
-var C = require('./mocks/test-constants');
+var C = require('./mocks/fetch-comments-page-constants');
 
 var chai = require('chai');
 var chaiStream = require('chai-stream');
