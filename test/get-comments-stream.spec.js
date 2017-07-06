@@ -3,14 +3,12 @@ var fetchCommentsPage = require('./mocks/fetch-comments-page');
 
 var chai = require('chai');
 var chaiStream = require('chai-stream');
-var chaiSubset = require('chai-subset');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 
 var expect = chai.expect;
 
 chai.use(chaiStream);
-chai.use(chaiSubset);
 chai.use(sinonChai);
 
 describe('get-comments-stream', function () {
