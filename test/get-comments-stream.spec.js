@@ -1,15 +1,16 @@
 var getCommentsStream = require('../lib/get-comments-stream');
 var fetchCommentsPage = require('./mocks/fetch-comments-page');
-var C = require('./mocks/fetch-comments-page-constants');
 
 var chai = require('chai');
 var chaiStream = require('chai-stream');
+var chaiSubset = require('chai-subset');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 
 var expect = chai.expect;
 
 chai.use(chaiStream);
+chai.use(chaiSubset);
 chai.use(sinonChai);
 
 describe('get-comments-stream', function () {
@@ -32,7 +33,7 @@ describe('get-comments-stream', function () {
 		var stream;
 
 		beforeEach(function () {
-			stream = getCommentsStream(C.VALID_VIDEO_ID, fetchCommentsPage);
+			stream = getCommentsStream('video 1', fetchCommentsPage);
 		});
 
 		it('should return a stream', function () {
@@ -61,7 +62,7 @@ describe('get-comments-stream', function () {
 			});
 
 			it('should return the first comment', function () {
-				expect(comment).to.equal(C.PAGE_1_COMMENT_1);
+				expect(comment).to.deep.equal({ text: 'page 1 comment 1' });
 			});
 		});
 
@@ -87,16 +88,21 @@ describe('get-comments-stream', function () {
 				expect(fetchCommentsPage).to.be.calledTwice;
 			});
 
-			it('should have returned all comments', function () {
-				expect(comments).to.deep.equal([
-					C.PAGE_1_COMMENT_1,
-					C.PAGE_1_COMMENT_2,
-					C.PAGE_1_COMMENT_3,
-					C.PAGE_1_COMMENT_4,
-					C.PAGE_1_COMMENT_5,
-					C.PAGE_2_COMMENT_1,
-					C.PAGE_2_COMMENT_2,
-					C.PAGE_2_COMMENT_3
+			it('should have returned all comments and replies (in order)', function () {
+				expect(comments).to.containSubset([
+					{ text: 'page 1 comment 1' },
+					{ text: 'page 1 comment 2' },
+					{ text: 'page 1 comment 2 reply 1' },
+					{ text: 'page 1 comment 2 reply 2' },
+					{ text: 'page 1 comment 3' },
+					{ text: 'page 1 comment 3 reply 1' },
+					{ text: 'page 1 comment 3 reply 2' },
+					{ text: 'page 1 comment 3 reply 3' },
+					{ text: 'page 1 comment 4' },
+					{ text: 'page 1 comment 5' },
+					{ text: 'page 2 comment 1' },
+					{ text: 'page 2 comment 2' },
+					{ text: 'page 2 comment 3' }
 				]);
 			});
 
@@ -118,7 +124,7 @@ describe('get-comments-stream', function () {
 		var stream;
 
 		beforeEach(function () {
-			stream = getCommentsStream(C.INVALID_VIDEO_ID, fetchCommentsPage);
+			stream = getCommentsStream('video XXX', fetchCommentsPage);
 		});
 
 		it('should emit an error', function (done) {
@@ -128,7 +134,10 @@ describe('get-comments-stream', function () {
 			});
 
 			stream.on('error', function (err) {
-				expect(err).to.deep.equal(C.ERROR_OBJECT);
+				expect(err).to.deep.equal({
+					type: 'video error',
+					message: 'some error'
+				});
 				done();
 			});
 		});

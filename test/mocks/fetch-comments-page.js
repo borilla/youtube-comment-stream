@@ -1,36 +1,53 @@
-var C = require('./fetch-comments-page-constants.js');
-
-var COMMENTS_PAGE_1 = {
-	comments: [
-		C.PAGE_1_COMMENT_1,
-		C.PAGE_1_COMMENT_2,
-		C.PAGE_1_COMMENT_3,
-		C.PAGE_1_COMMENT_4,
-		C.PAGE_1_COMMENT_5
-	],
-	nextPageToken: C.PAGE_2_TOKEN
+var VIDEOS = {
+	'video 1': {
+		'': {
+			comments: [
+				{ text: 'page 1 comment 1' },
+				{
+					text: 'page 1 comment 2',
+					replies: [
+						{ text: 'page 1 comment 2 reply 1' },
+						{ text: 'page 1 comment 2 reply 2' }
+					]
+				},
+				{
+					text: 'page 1 comment 3',
+					replies: [
+						{ text: 'page 1 comment 3 reply 1' },
+						{ text: 'page 1 comment 3 reply 2' },
+						{ text: 'page 1 comment 3 reply 3' }
+					]
+				},
+				{ text: 'page 1 comment 4' },
+				{ text: 'page 1 comment 5' }
+			],
+			nextPageToken: 'page 2'
+		},
+		'page 2': {
+			comments: [
+				{ text: 'page 2 comment 1' },
+				{ text: 'page 2 comment 2' },
+				{ text: 'page 2 comment 3' }
+			]
+			// no nextPageToken
+		}
+	}
 };
 
-var COMMENTS_PAGE_2 = {
-	comments: [
-		C.PAGE_2_COMMENT_1,
-		C.PAGE_2_COMMENT_2,
-		C.PAGE_2_COMMENT_3
-	],
-	nextPageToken: null
-};
+var ERROR_OBJECT = { type: 'video error', message: 'some error' };
 
 function fetchCommentsPage(videoId, nextPageToken) {
-	if (videoId === C.VALID_VIDEO_ID) {
-		if (nextPageToken === C.PAGE_2_TOKEN) {
-			return Promise.resolve(COMMENTS_PAGE_2);
-		}
+	var video = VIDEOS[videoId];
+	var page;
 
-		// NOTE: no token or an invalid token returns first comments page
-		return Promise.resolve(COMMENTS_PAGE_1);
+	if (!video) {
+		return Promise.reject(ERROR_OBJECT);
 	}
 
-	return Promise.reject(C.ERROR_OBJECT);
+	// NOTE: no token or an invalid token returns first comments page
+	page = video[nextPageToken] || video[''];
+
+	return Promise.resolve(page);
 }
 
 module.exports = fetchCommentsPage;

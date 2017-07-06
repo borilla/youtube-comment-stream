@@ -36,6 +36,7 @@
   "devDependencies": {
     "chai": "^4.0.2",
     "chai-stream": "0.0.0",
+    "chai-subset": "^1.5.0",
     "eslint": "^4.1.1",
     "husky": "^0.14.1",
     "mocha": "^3.4.2",
