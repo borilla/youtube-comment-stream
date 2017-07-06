@@ -62,7 +62,7 @@ describe('get-comments-stream', function () {
 			});
 
 			it('should return the first comment', function () {
-				expect(comment).to.deep.equal({ text: 'page 1 comment 1' });
+				expect(comment).to.deep.equal({ id: 'page 1 comment 1' });
 			});
 		});
 
@@ -89,20 +89,20 @@ describe('get-comments-stream', function () {
 			});
 
 			it('should have returned all comments and replies (in order)', function () {
-				expect(comments).to.containSubset([
-					{ text: 'page 1 comment 1' },
-					{ text: 'page 1 comment 2' },
-					{ text: 'page 1 comment 2 reply 1' },
-					{ text: 'page 1 comment 2 reply 2' },
-					{ text: 'page 1 comment 3' },
-					{ text: 'page 1 comment 3 reply 1' },
-					{ text: 'page 1 comment 3 reply 2' },
-					{ text: 'page 1 comment 3 reply 3' },
-					{ text: 'page 1 comment 4' },
-					{ text: 'page 1 comment 5' },
-					{ text: 'page 2 comment 1' },
-					{ text: 'page 2 comment 2' },
-					{ text: 'page 2 comment 3' }
+				expect(comments).to.deep.equal([
+					{ id: 'page 1 comment 1' },
+					{ id: 'page 1 comment 2' },
+					{ id: 'page 1 comment 2 reply 1', replyTo: 'page 1 comment 2' },
+					{ id: 'page 1 comment 2 reply 2', replyTo: 'page 1 comment 2' },
+					{ id: 'page 1 comment 3' },
+					{ id: 'page 1 comment 3 reply 1', replyTo: 'page 1 comment 3' },
+					{ id: 'page 1 comment 3 reply 2', replyTo: 'page 1 comment 3' },
+					{ id: 'page 1 comment 3 reply 3', replyTo: 'page 1 comment 3' },
+					{ id: 'page 1 comment 4' },
+					{ id: 'page 1 comment 5' },
+					{ id: 'page 2 comment 1' },
+					{ id: 'page 2 comment 2' },
+					{ id: 'page 2 comment 3' }
 				]);
 			});
 

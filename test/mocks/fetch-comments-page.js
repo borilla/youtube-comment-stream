@@ -2,32 +2,32 @@ var VIDEOS = {
 	'video 1': {
 		'': {
 			comments: [
-				{ text: 'page 1 comment 1' },
+				{ id: 'page 1 comment 1' },
 				{
-					text: 'page 1 comment 2',
+					id: 'page 1 comment 2',
 					replies: [
-						{ text: 'page 1 comment 2 reply 1' },
-						{ text: 'page 1 comment 2 reply 2' }
+						{ id: 'page 1 comment 2 reply 1' },
+						{ id: 'page 1 comment 2 reply 2' }
 					]
 				},
 				{
-					text: 'page 1 comment 3',
+					id: 'page 1 comment 3',
 					replies: [
-						{ text: 'page 1 comment 3 reply 1' },
-						{ text: 'page 1 comment 3 reply 2' },
-						{ text: 'page 1 comment 3 reply 3' }
+						{ id: 'page 1 comment 3 reply 1' },
+						{ id: 'page 1 comment 3 reply 2' },
+						{ id: 'page 1 comment 3 reply 3' }
 					]
 				},
-				{ text: 'page 1 comment 4' },
-				{ text: 'page 1 comment 5' }
+				{ id: 'page 1 comment 4' },
+				{ id: 'page 1 comment 5' }
 			],
 			nextPageToken: 'page 2'
 		},
 		'page 2': {
 			comments: [
-				{ text: 'page 2 comment 1' },
-				{ text: 'page 2 comment 2' },
-				{ text: 'page 2 comment 3' }
+				{ id: 'page 2 comment 1' },
+				{ id: 'page 2 comment 2' },
+				{ id: 'page 2 comment 3' }
 			]
 			// no nextPageToken
 		}
