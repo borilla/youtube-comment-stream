@@ -12,7 +12,7 @@ stream.on('readable', function () {
 });
 
 stream.on('error', function (err) {
-	console.error('ERROR READING COMMENTS:\n', err)
+	console.error('ERROR READING COMMENTS:\n', err);
 });
 
 stream.on('end', function () {

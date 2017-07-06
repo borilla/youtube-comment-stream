@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run unit-test && npm run lint",
     "unit-test": "mocha test",
-    "lint": "eslint src test",
+    "lint": "eslint .",
     "example": "node ./example/example.js",
     "precommit": "npm test",
     "postcommit": "npm --no-git-tag-version version patch",
