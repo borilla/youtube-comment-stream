@@ -1,13 +1,14 @@
 const getCommentsStream = require('../index');
 const videoId = 'HVv-oBN6AWA';
 const stream = getCommentsStream(videoId);
+let count = 0;
 
 stream.on('readable', function () {
 	const comment = stream.read();
 
 	if (comment) {
+		console.log('\n--------\n' + ++count + '\n--------\n');
 		console.log(comment.text);
-		console.log('\n--------\n');
 	}
 });
 
@@ -16,5 +17,6 @@ stream.on('error', function (err) {
 });
 
 stream.on('end', function () {
+	console.log('\n--------\n');
 	console.log('NO MORE COMMENTS');
 });
