@@ -1,5 +1,7 @@
 # youtube-comments-stream
 
+[![npm version](https://badge.fury.io/js/youtube-comments-stream.svg)](https://badge.fury.io/js/youtube-comments-stream)
+
 Scrape comments (including replies) from a [YouTube](https://www.youtube.com/) video and present as a stream
 
 ## Purpose
@@ -14,6 +16,34 @@ It presents a readable object stream returning individual comments as objects. F
 npm install --save youtube-comments-stream
 ```
 
+## API
+
+The module contains three functions:
+
+* `get(VIDEO_ID)`: Get a readable stream of all comments from the video
+* `limit(MAX_COMMENTS)`: Get a transform stream to limit the number of items in a comments stream
+* `filter(FILTER_FN)`: Get a transform stream to filter a comments stream
+
+### Notes
+
+`FILTER_FN` is a function that receives a comment as a parameter and returns a boolean, eg:
+
+```js
+function FILTER_FN(comment) {
+	return comment.author === 'john';
+}
+```
+
+For convenience the module itself is a function the same as `get()`, ie
+
+```js
+const commentsStream = require('youtube-comments-stream');
+
+const stream = commentsStream(VIDEO_ID);
+// ...is exactly the same as
+const stream = commentsStream.get(VIDEO_ID);
+```
+
 ## Examples
 
 ### Read all comments from a video
@@ -22,7 +52,6 @@ npm install --save youtube-comments-stream
 const getCommentsStream = require('youtube-comments-stream');
 
 const VIDEO_ID = 'HVv-oBN6AWA';
-
 const stream = getCommentsStream(VIDEO_ID);
 
 stream.on('readable', function () {
@@ -50,9 +79,8 @@ const commentsStream = require('youtube-comments-stream');
 
 const VIDEO_ID = 'HVv-oBN6AWA';
 const MAX_COMMENTS = 5;
-
-const limit = getCommentsStream.limit(MAX_COMMENTS);
-const stream = getCommentsStream(VIDEO_ID).pipe(limit);
+const limit = commentsStream.limit(MAX_COMMENTS);
+const stream = commentsStream.get(VIDEO_ID).pipe(limit);
 
 stream.on('readable', function () {
 	const comment = stream.read();
@@ -65,7 +93,9 @@ stream.on('readable', function () {
 /* ... */
 ```
 
-### Read comments by author (that appear within the first 1000 comments)
+### Read comments by author
+
+(that appear in the first 1000 video comments)
 
 ```js
 const commentsStream = require('youtube-comments-stream');
@@ -73,7 +103,6 @@ const commentsStream = require('youtube-comments-stream');
 const VIDEO_ID = 'kpaFizGUJg8';
 const MAX_COMMENTS = 1000;
 const AUTHOR = 'nokomis mn';
-
 const limit = commentsStream.limit(MAX_COMMENTS);
 const filter = commentsStream.filter(comment => comment.author === AUTHOR);
 const stream = commentsStream.get(VIDEO_ID).pipe(limit).pipe(filter);

@@ -1,10 +1,9 @@
-const getCommentsStream = require('../index');
+const commentsStream = require('../index');
 
 const VIDEO_ID = 'HVv-oBN6AWA';
 const MAX_COMMENTS = 5;
-
-const limit = getCommentsStream.limit(MAX_COMMENTS);
-const stream = getCommentsStream(VIDEO_ID).pipe(limit);
+const limit = commentsStream.limit(MAX_COMMENTS);
+const stream = commentsStream.get(VIDEO_ID).pipe(limit);
 
 stream.on('readable', function () {
 	const comment = stream.read();
