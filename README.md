@@ -16,12 +16,14 @@ npm install --save youtube-comments-stream
 
 ## Examples
 
-### Return all comments from a video
+### Read all comments from a video
 
 ```js
 const getCommentsStream = require('youtube-comments-stream');
-const videoId = 'HVv-oBN6AWA';
-const stream = getCommentsStream(videoId);
+
+const VIDEO_ID = 'HVv-oBN6AWA';
+
+const stream = getCommentsStream(VIDEO_ID);
 
 stream.on('readable', function () {
 	const comment = stream.read();
@@ -32,44 +34,80 @@ stream.on('readable', function () {
 });
 
 stream.on('error', function (err) {
-	console.error('ERROR READING COMMENTS:\n', err)
+	console.error('ERROR READING COMMENTS:', err)
 });
 
 stream.on('end', function () {
 	console.log('NO MORE COMMENTS');
+	process.exit();
 });
 ```
 
-### Filter and limit comments
-
-The module contains `filter` and `limit` helpers to create [Transform streams](https://nodejs.org/api/stream.html#stream_class_stream_transform), which can be attached to the comments stream using `pipe()`
-
-For example, return the first 10 comments that contain the word "NASA":
+### Read only the first 5 comments from a video
 
 ```js
 const commentsStream = require('youtube-comments-stream');
 
-const videoId = 'ZuToYSYdJS0';
-// filter for comments containing the text "NASA"
-const filter = commentsStream.filter(comment => /nasa/i.test(comment.text));
-// limit results to the first 10 comments
-const limit = commentsStream.limit(10);
-// "pipe" stream through our filter and limit transforms
-const stream = commentsStream.get(videoId).pipe(filter).pipe(limit);
+const VIDEO_ID = 'HVv-oBN6AWA';
+const MAX_COMMENTS = 5;
+
+const limit = getCommentsStream.limit(MAX_COMMENTS);
+const stream = getCommentsStream(VIDEO_ID).pipe(limit);
 
 stream.on('readable', function () {
-    const comment = stream.read();
- 
-    if (comment) {
-        console.log(comment.text);
-    }
+	const comment = stream.read();
+
+	if (comment) {
+		console.log(comment.text);
+	}
 });
 
-stream.on('error', function (err) {
-    console.error('ERROR READING COMMENTS:\n', err)
+/* ... */
+```
+
+### Read comments by author (that appear within the first 1000 comments)
+
+```js
+const commentsStream = require('youtube-comments-stream');
+
+const VIDEO_ID = 'kpaFizGUJg8';
+const MAX_COMMENTS = 1000;
+const AUTHOR = 'nokomis mn';
+
+const limit = commentsStream.limit(MAX_COMMENTS);
+const filter = commentsStream.filter(comment => comment.author === AUTHOR);
+const stream = commentsStream.get(VIDEO_ID).pipe(limit).pipe(filter);
+
+stream.on('readable', function () {
+	const comment = stream.read();
+
+	if (comment) {
+		console.log(comment.text);
+	}
 });
 
-stream.on('end', function () {
-    console.log('NO MORE COMMENTS');
+/* ... */
+```
+
+### Read the first 8 comments that contain the text "NASA"
+
+```js
+const commentsStream = require('youtube-comments-stream');
+
+const VIDEO_ID = 'ZuToYSYdJS0';
+const REGEX = /nasa/i;
+const MAX_COMMENTS = 8;
+const filter = commentsStream.filter(comment => REGEX.test(comment.text));
+const limit = commentsStream.limit(MAX_COMMENTS);
+const stream = commentsStream.get(VIDEO_ID).pipe(filter).pipe(limit);
+
+stream.on('readable', function () {
+	const comment = stream.read();
+
+	if (comment) {
+		console.log(comment.text);
+	}
 });
+
+/* ... */
 ```

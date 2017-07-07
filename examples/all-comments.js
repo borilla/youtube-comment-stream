@@ -1,22 +1,23 @@
 const getCommentsStream = require('../index');
-const videoId = 'HVv-oBN6AWA';
-const stream = getCommentsStream(videoId);
-let count = 0;
+
+const VIDEO_ID = 'HVv-oBN6AWA';
+
+const stream = getCommentsStream(VIDEO_ID);
 
 stream.on('readable', function () {
 	const comment = stream.read();
 
 	if (comment) {
-		console.log('\n--------\n' + ++count + '\n--------\n');
 		console.log(comment.text);
+		console.log('\n--------\n');
 	}
 });
 
 stream.on('error', function (err) {
-	console.error('ERROR READING COMMENTS:\n', err);
+	console.error('ERROR READING COMMENTS:', err);
 });
 
 stream.on('end', function () {
-	console.log('\n--------\n');
 	console.log('NO MORE COMMENTS');
+	process.exit();
 });
