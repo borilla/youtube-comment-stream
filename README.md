@@ -18,11 +18,12 @@ npm install --save youtube-comments-stream
 
 ## API
 
-The module contains three functions:
+The module contains four functions:
 
 * `get(VIDEO_ID)`: Get a readable stream of all comments from the video
 * `limit(MAX_COMMENTS)`: Get a transform stream to limit the number of items in a comments stream
 * `filter(FILTER_FN)`: Get a transform stream to filter a comments stream
+* `mock(COMMENTS)`: Get a mock comments stream (for testing)
 
 ### Notes
 

@@ -1,5 +1,5 @@
 var limitCommentsStream = require('../lib/limit-comments-stream');
-var mockCommentsStream = require('./mocks/mock-comments-stream');
+var mockCommentsStream = require('../lib/mock-comments-stream');
 
 var TransformStream = require('stream').Transform;
 var chai = require('chai');
