@@ -1,6 +1,7 @@
 const getCommentsStream = require('../index');
 
 const VIDEO_ID = 'HVv-oBN6AWA';
+
 const stream = getCommentsStream(VIDEO_ID);
 
 stream.on('readable', function () {
