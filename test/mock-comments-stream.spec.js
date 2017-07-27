@@ -51,7 +51,7 @@ describe('mock-comments-stream', function () {
 		});
 	});
 
-	describe('when any of the input comments is an error object', function () {
+	describe('when any of the input comments has a "type" containing "error"', function () {
 		before(function () {
 			inputComments = [
 				{ text: 'comment 1' },
@@ -66,11 +66,45 @@ describe('mock-comments-stream', function () {
 			];
 		});
 
+		it('should stream all of the comments up to the error', function () {
+			expect(streamedComments).to.deep.equal([
+				{ text: 'comment 1' },
+				{ text: 'comment 2' },
+				{ text: 'comment 3' },
+				{ text: 'comment 4' },
+				{ text: 'comment 5' }
+			]);
+		});
+
 		it('should emit an error', function () {
 			expect(error).to.deep.equal({
 				type: 'some error',
 				message: 'whoops, something has gone wrong'
 			});
+		});
+	});
+
+	describe('when the input comments have a "type" not containing "error"', function () {
+		before(function () {
+			inputComments = [
+				{ text: 'comment 1' },
+				{ text: 'comment 2' },
+				{ text: 'comment 3' },
+				{ text: 'comment 4' },
+				{ text: 'comment 5' },
+				{ type: 'okay', text: 'nothing has gone wrong' },
+				{ text: 'comment 6' },
+				{ text: 'comment 7' },
+				{ text: 'comment 8' }
+			];
+		});
+
+		it('should stream all of the comments', function () {
+			expect(streamedComments).to.deep.equal(inputComments);
+		});
+
+		it('should not emit an error', function () {
+			expect(error).to.be.null;
 		});
 	});
 });

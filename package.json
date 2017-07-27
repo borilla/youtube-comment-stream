@@ -1,13 +1,13 @@
 {
   "name": "youtube-comments-stream",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Scrape comments (including replies) from a YouTube video and present as a stream",
   "main": "index.js",
   "scripts": {
     "test": "npm run unit-test && npm run lint",
     "unit-test": "mocha test",
     "lint": "eslint .",
-    "example": "node ./example/example.js",
+    "example": "node ./examples/all-comments.js",
     "precommit": "npm test",
     "postcommit": "npm --no-git-tag-version version patch",
     "prepublish": "npm test",
