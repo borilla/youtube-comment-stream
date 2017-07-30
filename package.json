@@ -1,6 +1,6 @@
 {
   "name": "youtube-comments-stream",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "Scrape comments (including replies) from a YouTube video and present as a stream",
   "main": "index.js",
   "scripts": {
@@ -42,5 +42,5 @@
     "sinon": "^2.3.6",
     "sinon-chai": "^2.11.0"
   },
-  "tonicExampleFilename": "runkit-example.js"
+  "tonicExampleFilename": "./examples/runkit/example.js"
 }

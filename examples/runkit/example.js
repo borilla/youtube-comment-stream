@@ -1,4 +1,3 @@
-/* eslint no-console: "off" */
 const commentsStream = require('youtube-comments-stream');
 
 const VIDEO_ID = 'HVv-oBN6AWA';
